@@ -26,9 +26,10 @@ export default async () => {
   await page.evaluate(() => {
     window.scrollTo(0, document.body.scrollHeight);
   });
-
+  let current_page = 1;
   while (true) {
     await sleep(1500);
+    console.log("current_page : ", current_page);
     const productContainer = await page.waitForSelector("ul.prod_list");
     const productElements = await productContainer.$$("li > div.prod_box"); // Select all <li> elements inside productContainer
 
@@ -38,9 +39,10 @@ export default async () => {
         (node) => node.textContent
       );
       const productImageContainer = await productElement.$("p.img > img");
-      const product_image = await productImageContainer.evaluate((node) =>
-        node.getAttribute("src")
-      );
+      const product_image =
+        (await productImageContainer?.evaluate((node) =>
+          node.getAttribute("src")
+        )) || "이미지 준비중";
       const priceContainer = await productElement.$("p.price > span.cost");
       const price = await priceContainer.evaluate((node) => node.textContent);
       const flagBoxContainer = await productElement.$("div.flag_box");
@@ -69,6 +71,7 @@ export default async () => {
     await page.evaluate((element) => {
       element.click();
     }, lastPageBtn);
+    current_page++;
   }
   await browser.close();
   console.log("products : ", products.length);
