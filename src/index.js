@@ -1,12 +1,15 @@
-import { GsEventList } from "./entity/gs/gs-event-list.js";
-import getGsEventList from "./crawl/gs/gs-event-list.js";
+import dotenv from "dotenv";
 import puppeteer from "puppeteer";
-import getGsEventDetail from "./crawl/gs/get-event-detail.js";
 import getGsProductList from "./crawl/gs/get-product-list.js";
+import { AppDataSource } from "./data-source.js";
+
+dotenv.config({});
+
 (async () => {
+  const dataSource = await AppDataSource.initialize();
   const browser = await puppeteer.launch({ headless: false });
-  const temp = await getGsProductList();
-  console.log("temp : ", temp);
+  // const temp = await getGsProductList();
+  // console.log("temp : ", temp);
   // const gsEventList = await getGsEventList(browser);
   // await browser.close();
   // const gsEventEntities = gsEventList.map((obj) => new GsEventList(obj));
