@@ -1,6 +1,17 @@
 import puppeteer from "puppeteer";
-import { Product } from "../../entity/gs/product.js";
-import { sleep } from "../../util/index.js";
+import { sleep } from "../../util";
+
+const getRemoteProductId = (imageUrl) => {
+  if (!imageUrl) return "";
+  // 정규식을 사용하여 "GD_" 다음에 오는 숫자 및 밑줄(_) 사이의 데이터 추출
+  const match = imageUrl.match(/GD_(\w+)_/);
+
+  // 추출된 데이터 출력
+  if (!match) return "";
+  if (match.length === 0) return "";
+  const remoteProductId = match[1];
+  return remoteProductId;
+};
 
 export default async () => {
   const browser = await puppeteer.launch({ headless: false });
@@ -49,15 +60,16 @@ export default async () => {
       const event_type = await flagBoxContainer.evaluate(
         (node) => node.className
       );
-
-      const productInstance = new Product(
-        1,
-        "test",
+      const remote_product_id = getRemoteProductId(product_image);
+      const productInstance = {
+        remote_product_id,
+        store_id: 1,
+        event_type,
         product_name,
-        product_image,
         price,
-        event_type
-      );
+        price_origin: price,
+        product_image,
+      };
       products.push(productInstance);
     }
     console.log("productElements : ", productElements.length);
@@ -74,6 +86,5 @@ export default async () => {
     current_page++;
   }
   await browser.close();
-  console.log("products : ", products.length);
-  await sleep(2000);
+  return products;
 };

@@ -1,4 +1,4 @@
-import { Column } from "typeorm";
+import { Column, Entity, PrimaryColumn } from "typeorm";
 
 /**
  * remote_product_id	string			
@@ -14,40 +14,37 @@ is_display	enum	공개, 비공개 외 다른 상태 값의 추가를 생각하�
 @Entity("product")
 export class ProductEntity {
   @PrimaryColumn({ type: "varchar" })
-  remote_product_id;
+  remote_product_id: string;
 
   @PrimaryColumn({ type: "int" })
-  store_id;
+  store_id: number;
 
   @Column({ type: "varchar" })
-  event_type;
+  event_type: string;
 
   @Column({ type: "varchar" })
-  product_name;
+  product_name: string;
 
   @Column({ type: "int" })
-  price;
+  price: number;
 
   @Column({ type: "int" })
-  price_origin;
+  price_origin: number;
 
   @Column({ type: "text" })
-  product_image;
+  product_image: string;
 
   @Column({ type: "date", default: null, nullable: true })
-  start_date;
+  start_date: string;
 
   @Column({ type: "date", default: null, nullable: true })
-  end_date;
+  end_date: string;
 
   @Column({ type: "int", default: 0 })
-  view_count;
+  view_count: number;
 
   @Column({ type: "varchar", default: "y" })
-  is_display;
-
-  @Column({ type: "int", default: 0 })
-  view_count;
+  is_display: string;
 }
 
 // export class Product {
