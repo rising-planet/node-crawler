@@ -3,7 +3,7 @@ import { AppDataSource } from "../data-source";
 
 const repo = AppDataSource.getRepository(ProductEntity);
 
-export const createRemoteCategoryInstance = async (params) => {
+export const createRemoteCategoryInstance = (params) => {
   return repo.create(params);
 };
 

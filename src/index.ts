@@ -11,11 +11,19 @@ dotenv.config({});
 
 (async () => {
   const dataSource = await AppDataSource.initialize();
-  const browser = await puppeteer.launch({ headless: false });
+  // const browser = await puppeteer.launch({ headless: false });
   const productParams = await getGsProductList();
-  const productInstance = createRemoteCategoryInstance(productParams);
-  const saveResult = await saveRemoteCategory(productInstance);
-  console.log("saveResult : ", saveResult.length);
+  const filteredRemoteProductId = productParams.filter(
+    (obj) => !obj.remote_product_id
+  );
+  const productIds = filteredRemoteProductId.map(
+    (obj) => obj.remote_product_id
+  );
+  if (productParams.length > 0) {
+    const productInstance = createRemoteCategoryInstance(productParams);
+    const saveResult = await saveRemoteCategory(productInstance);
+    console.log("saveResult : ", saveResult.length);
+  }
   // const gsEventList = await getGsEventList(browser);
   // await browser.close();
   // const gsEventEntities = gsEventList.map((obj) => new GsEventList(obj));

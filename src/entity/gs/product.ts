@@ -1,15 +1,15 @@
 import { Column, Entity, PrimaryColumn } from "typeorm";
 
 /**
- * remote_product_id	string			
-store_id	int			
-event_type	enum			
-product_name	string			
-price	double			
-price_origin	double			
-product_image	text			
-start_date,end_date	dateTime			
-is_display	enum	공개, 비공개 외 다른 상태 값의 추가를 생각하여 enum처리		
+ * remote_product_id	string
+ * store_id	int
+ * event_type	enum
+ * product_name	string
+ * price	double
+ * price_origin	double
+ * product_image	text
+ * start_date,end_date	dateTime
+ * is_display	enum	공개, 비공개 외 다른 상태 값의 추가를 생각하여 enum처리
  */
 @Entity("product")
 export class ProductEntity {
