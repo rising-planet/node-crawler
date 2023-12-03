@@ -26,8 +26,14 @@ const convertPriceToInteger = (priceToString: string) => {
 };
 
 const convertEventType = (event_type: string) => {
+  const convertObj = {
+    TWO_TO_ONE: "2+1",
+    ONE_TO_ONE: "1+1",
+    GIFT: "덤증정",
+  };
   const result = event_type.replace("flag_box ", "");
-  return result;
+  if (!result) return "";
+  return convertObj[result];
 };
 
 export default async () => {
